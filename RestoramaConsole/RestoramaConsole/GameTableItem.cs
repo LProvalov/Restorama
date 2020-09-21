@@ -11,10 +11,31 @@ namespace RestoramaConsole
             Static
         }
 
-        public GameTableItem(GameTableItemType type)
+        public enum GameTableItemStatus
+        {
+            Empty,
+            Normal,
+
+        }
+
+        public GameTableItem(GameTableItemType type, GameTableItemStatus status)
         {
             Type = type;
+            Status = status;
         }
         public GameTableItemType Type { get; private set; }
+        public GameTableItemStatus Status { get; set; }
+
+        public void InitializeNew()
+        {
+            if (Status == GameTableItemStatus.Empty)
+            {
+                Status = GameTableItemStatus.Normal;
+            }
+            else
+            {
+                // Log warning
+            }
+        }
     }
 }

@@ -6,7 +6,8 @@ namespace RestoramaConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            GameTable gameTable = new GameTable(5, 5);
+            gameTable.FillItems();
         }
     }
 }
