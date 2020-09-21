@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TouchPhaseDisplay : MonoBehaviour
 {
     public Text phaseDisplayText;
+    public Text touchCoorditatesText;
 
     private Touch theTouch;
     private float timeTouchEnded;
@@ -18,6 +19,11 @@ public class TouchPhaseDisplay : MonoBehaviour
         {
             theTouch = Input.GetTouch(0);
             phaseDisplayText.text = theTouch.phase.ToString();
+
+            if (touchCoorditatesText != null)
+            {
+                touchCoorditatesText.text = $"X: {theTouch.position.x}, Y: {theTouch.position.y}";
+            }
 
             if (theTouch.phase == TouchPhase.Ended)
             {
