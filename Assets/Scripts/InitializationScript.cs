@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Markup;
+//using System.Windows.Markup;
 using UnityEngine;
 
 public class InitializationScript : MonoBehaviour
 {
-    public GameTable gameTable;
+    public GameTable GameTable;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Assert(gameTable != null, "[Initialization Script] gameTable object in null!");
+        Debug.Assert(GameTable != null, "[Initialization Script] GameTable object in null!");
 
-        gameTable.Initialize();
+        GameTable?.Initialize();
+
     }
 
 }
