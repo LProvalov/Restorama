@@ -18,6 +18,8 @@ public class GameTableItem : MonoBehaviour
         Tomato
     }
 
+    public GameObject InstantiatedPrefab { get; set; } = null;
+
     public GameTableItem(Type type)
     {
         ItemType = type;

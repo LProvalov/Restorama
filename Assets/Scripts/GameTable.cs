@@ -5,67 +5,50 @@ using UnityEngine;
 
 public class GameTable : MonoBehaviour
 {
-    private GameTableItem[] _gameTableItems = null;
+    private GameTableItem[] _gameTableItems;
     private GridModule _gridModule;
 
-    public int colMax = 0, rowMax = 0;
-    public GameTableItem gameTableItem;
+    public int ColMax = 0, RowMax = 0;
     public GameObject TableBackground;
 
-    public void Initialize()
+    private const string MODULE_TAG = "[GameTable]";
+
+    public void Start()
     {
-        Debug.Assert(gameTableItem != null, "[GameTable] gameTableItem object is null.");
-        Debug.Assert(TableBackground != null, "[GameTable] TableBackground object is null.");
+        Debug.Log($"{MODULE_TAG} start");
+        Debug.Assert(TableBackground != null, $"{MODULE_TAG} TableBackground object is null.");
 
-        _gameTableItems = new GameTableItem[colMax * rowMax];
-        
-        _gridModule = GetComponent<GridModule>();
-        Debug.Assert(_gridModule != null, "[GameTable] GameTable doesn't contain GridModule object.");
+        _gameTableItems = new GameTableItem[ColMax * RowMax];
 
-        InstantiateGameTableItems();
+        _gridModule = GetComponentInChildren<GridModule>();
+        Debug.Assert(_gridModule != null, $"{MODULE_TAG} GameTable doesn't contain GridModule object.");
     }
 
-    private void InstantiateGameTableItems()
+
+    public void InstantiateItems()
     {
-        for (int col = 0; col < colMax; col++)
-        {
-            for (int row = 0; row < rowMax; row++)
-            {
-                var instantiatedItem = Instantiate(gameTableItem, new Vector3(_gridModule.ItemStepX * col, _gridModule.ItemStepY * row, 0),
-                                                   Quaternion.identity, this.transform);
-                if (instantiatedItem != null)
-                {
-                    instantiatedItem.name = $"GameTableItem(C:{col},R:{row})";
-                    var instantiatedGameTableItem =
-                        (instantiatedItem.GetComponent(typeof(GameTableItem)) as GameTableItem);
-                    if (instantiatedGameTableItem != null)
-                    {
-                        AddGameTableItem(instantiatedGameTableItem, col, row);
-                    }
-                }
-            }
-        }
+        _gridModule?.InstantiateItems(_gameTableItems);
     }
 
     public void AddGameTableItem(GameTableItem item, int col, int row)
     {
-        Debug.Assert(_gameTableItems != null, "[GameTable] _gameTableItems list is null, first call GameTable.Initialize(col, row);");
+        Debug.Assert(_gameTableItems != null, $"{MODULE_TAG} _gameTableItems list is null, first call GameTable.Initialize(col, row);");
         
         if (item != null)
         {
-            _gameTableItems[col * rowMax + row] = item;
+            _gameTableItems[col * RowMax + row] = item;
         }
     }
 
-    public GameTableItem GetItem(int col, int row)
+    public GameTableItem GetTableItem(int col, int row)
     {
-        Debug.Assert(_gameTableItems != null, "[GameTable] _gameTableItems list is null, first call GameTable.Initialize(col, row);");
-        if (col < 0 || row < 0 || col >= colMax || row >= rowMax)
+        Debug.Assert(_gameTableItems != null, $"{MODULE_TAG} _gameTableItems list is null, first call GameTable.Initialize(col, row);");
+        if (col < 0 || row < 0 || col >= ColMax || row >= RowMax)
         {
-            throw new ArgumentException("col or row attributes has wrong value");
+            throw new ArgumentException($"{MODULE_TAG} Col or Row attributes has wrong value");
         }
 
-        return _gameTableItems[col * rowMax + row];
+        return _gameTableItems[col * RowMax + row];
     }
     
 }

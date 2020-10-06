@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4333769746676645883}
   - component: {fileID: 3159415042264339136}
   m_Layer: 5
-  m_Name: GameTableItem
+  m_Name: GameTableItemPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,3 +100,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e985972e7b822e4ab2ded4258efa054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemType: 0
