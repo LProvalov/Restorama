@@ -12,6 +12,7 @@ public class GameTable : MonoBehaviour
     public GameObject TableBackground;
 
     private const string MODULE_TAG = "[GameTable]";
+    private bool _isInitialized = false;
 
     public void Start()
     {
@@ -25,9 +26,10 @@ public class GameTable : MonoBehaviour
     }
 
 
-    public void InstantiateItems()
+    public void FillGameTableByItems()
     {
-        _gridModule?.InstantiateItems(_gameTableItems);
+        // fill _gameTableItems
+        _gridModule?.InstantiateItems();
     }
 
     public void AddGameTableItem(GameTableItem item, int col, int row)
@@ -50,5 +52,11 @@ public class GameTable : MonoBehaviour
 
         return _gameTableItems[col * RowMax + row];
     }
-    
+
+    public GameTableItem[] GetTableItems()
+    {
+        return _gameTableItems;
+    }
+
+    public bool IsInitialized => _isInitialized;
 }

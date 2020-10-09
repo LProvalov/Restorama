@@ -7,16 +7,18 @@ public class GridModule : MonoBehaviour
 {
     public GameObject GameTableItemPrefab;
 
-    public int BorderThickness = 50;
+    public int LeftBorderThickness = 50;
+    public int RightBorderThickness = 50;
     public int TopBorderThickness = 50;
     public int BottomBorderThickness = 50;
+    public int GridCellBorderThickness = 1;
     
     private GameTable _gameTabel = null;
     [SerializeField]
     private float _gridCellWidth, _gridCellHeight;
     [SerializeField]
     private float _gridCellStartWidth, _gridCellStartHeight;
-    private RectTransform _canvasRectTransform;
+
     private RectTransform _gridModuleRectTransform = null;
 
     private bool _IsInitialized = false;
@@ -31,45 +33,42 @@ public class GridModule : MonoBehaviour
 
         var parentCanvas = GetComponentInParent<Canvas>();
         Debug.Assert(parentCanvas, $"{MODULE_TAG} Parent object doesn't contain Canvas component.");
-
-        _canvasRectTransform = parentCanvas?.GetComponent<RectTransform>();
-        Debug.Log($"RectWidth: {_canvasRectTransform?.rect.width}, RectHeight: {_canvasRectTransform?.rect.height}");
         
         _gridModuleRectTransform = GetComponent<RectTransform>();
         Debug.Assert(_gridModuleRectTransform != null, $"{MODULE_TAG} GridModule haven't got a rect transform component.");
 
-
-        float canvasWidth = !_canvasRectTransform ? 0 : _canvasRectTransform.rect.width;
-        float canvasHeight = !_canvasRectTransform ? 0 : _canvasRectTransform.rect.height;
         
-        if (canvasWidth > BorderThickness * 2)
+        if (_gridModuleRectTransform.rect.width > LeftBorderThickness + RightBorderThickness)
         {
-            _gridCellWidth = (canvasWidth - BorderThickness * 2) / _gameTabel.ColMax;
+            _gridCellWidth = (_gridModuleRectTransform.rect.width - LeftBorderThickness - RightBorderThickness) / _gameTabel.ColMax;
+            _gridCellWidth -= GridCellBorderThickness;
         }
 
-        if (canvasHeight > TopBorderThickness + BottomBorderThickness)
+        if (_gridModuleRectTransform.rect.height > TopBorderThickness + BottomBorderThickness)
         {
-            _gridCellHeight = (canvasHeight - TopBorderThickness - BottomBorderThickness) / _gameTabel.RowMax;
+            _gridCellHeight = (_gridModuleRectTransform.rect.height - TopBorderThickness - BottomBorderThickness) / _gameTabel.RowMax;
+            _gridCellHeight -= GridCellBorderThickness;
         }
 
-        _gridCellStartWidth = _gridModuleRectTransform.position.x - 360f;
-        _gridCellStartHeight = _gridModuleRectTransform.position.y - (950f / 2);
+        _gridCellStartWidth = _gridModuleRectTransform.rect.min.x + GridCellBorderThickness;
+        _gridCellStartHeight = _gridModuleRectTransform.rect.min.y + GridCellBorderThickness;
     }
 
 
 
-    public void InstantiateItems(GameTableItem[] gameTableItems)
+    public void InstantiateItems()
     {
         Debug.Assert(_IsInitialized, "GridModule doesn't initialized. Call 'Initialize(int colMax, int rowMax)' method.");
+        var gameTableItems = _gameTabel.GetTableItems();
 
         for (int col = 0; col < _gameTabel.ColMax; col++)
         {
             for (int row = 0; row < _gameTabel.RowMax; row++)
             {
+                float xInstPos = _gridCellStartWidth + _gridCellWidth * col;
+                float yInstPos = _gridCellStartHeight + _gridCellHeight * row;
                 var instantiatedItem = Instantiate(GameTableItemPrefab,
-                                                   new Vector3(_gridCellWidth + _gridCellWidth * col, 
-                                                               _gridCellHeight + _gridCellHeight * row,
-                                                               0),
+                                                   new Vector3(xInstPos, yInstPos, 0),
                                                    Quaternion.identity, this.transform);
                 if (instantiatedItem != null)
                 {

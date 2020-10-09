@@ -133,8 +133,9 @@ GameObject:
   m_Component:
   - component: {fileID: 11902365}
   - component: {fileID: 11902366}
+  - component: {fileID: 11902367}
   m_Layer: 0
-  m_Name: StartModule
+  m_Name: GameMaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,7 +167,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef490327b1285314eaf44756b6938dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameTable: {fileID: 1570361660}
+--- !u!114 &11902367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11902364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1e1d4f73cd822489b9da25b56a3da4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _state: 0
+  GameTable: {fileID: 1570361658}
 --- !u!1 &93116781
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,9 +395,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameTableItemPrefab: {fileID: 4557685659554314954, guid: 2dbf21a345dea8d4c97351fc53f06af5, type: 3}
-  BorderThickness: 50
+  LeftBorderThickness: 50
+  RightBorderThickness: 50
   TopBorderThickness: 50
   BottomBorderThickness: 50
+  GridCellBorderThickness: 1
+  _gridCellWidth: 0
+  _gridCellHeight: 0
+  _gridCellStartWidth: 0
+  _gridCellStartHeight: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
