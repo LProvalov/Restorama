@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1567265233144995241}
   - component: {fileID: 4333769746676645883}
-  - component: {fileID: 3159415042264339136}
+  - component: {fileID: 6107276029909793892}
+  - component: {fileID: 4682919762164654591}
   m_Layer: 5
   m_Name: GameTableItemPrefab
   m_TagString: Untagged
@@ -74,21 +75,21 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2085796139
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: baf907f36793287488a2629e6151ead4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 74.5, y: 78}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3159415042264339136
+--- !u!114 &6107276029909793892
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,7 +98,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 4557685659554314954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e985972e7b822e4ab2ded4258efa054, type: 3}
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemType: 0
+  m_SpriteLibraryAsset: {fileID: 11400000, guid: 39e97c460dbb42c499662846d0b72291, type: 2}
+--- !u!114 &4682919762164654591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4557685659554314954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: -4.2800271e+9
+  m_labelHash: -7.808474e-17

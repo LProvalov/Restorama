@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GameTableItem : MonoBehaviour
+public class GameTableItem
 {
     public enum Type
     {

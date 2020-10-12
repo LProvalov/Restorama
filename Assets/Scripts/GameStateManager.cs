@@ -25,28 +25,39 @@ public class GameStateManager : MonoBehaviour
     {
         switch (_state)
         {
-        case GameState.InitializeLevel:
-            if (GameTable.IsInitialized)
-            {
-                _state = GameState.FillingOfGameTable;
-            }
+            case GameState.InitializeLevel:
+                if (GameTable.State == GameTable.GameTableState.ReadyToInitialization)
+                {
+                    GameTable.Initialization();
+                }
+                if (GameTable.State == GameTable.GameTableState.Initialized)
+                {
+                    _state = GameState.FillingOfGameTable;
+                }
+                break;
+            case GameState.FillingOfGameTable:
+                if (GameTable.State == GameTable.GameTableState.Initialized)
+                {
+                    GameTable.FillGameTableByItems();
+                }
 
-            break;
-        case GameState.FillingOfGameTable:
-            
-            break;
-        case GameState.PlayerTurn:
-            
-            break;
-        case GameState.PlayerTurnProcessing:
-            
-            break;
-        case GameState.EndingLevel:
-            
-            break;
-        case GameState.LevelEnded:
-            
-            break;
+                if (GameTable.State == GameTable.GameTableState.FilledByItems)
+                {
+                    _state = GameState.PlayerTurn;
+                }
+                break;
+            case GameState.PlayerTurn:
+
+                break;
+            case GameState.PlayerTurnProcessing:
+
+                break;
+            case GameState.EndingLevel:
+
+                break;
+            case GameState.LevelEnded:
+
+                break;
         }
     }
 }

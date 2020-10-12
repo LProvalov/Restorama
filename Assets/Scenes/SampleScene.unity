@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
-  GameTable: {fileID: 1570361658}
+  GameTable: {fileID: 1570361660}
 --- !u!1 &93116781
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,11 +395,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameTableItemPrefab: {fileID: 4557685659554314954, guid: 2dbf21a345dea8d4c97351fc53f06af5, type: 3}
-  LeftBorderThickness: 50
-  RightBorderThickness: 50
-  TopBorderThickness: 50
-  BottomBorderThickness: 50
-  GridCellBorderThickness: 1
+  LeftBorderThickness: 25
+  RightBorderThickness: 25
+  TopBorderThickness: 25
+  BottomBorderThickness: 25
+  GridCellBorderThickness: 5
   _gridCellWidth: 0
   _gridCellHeight: 0
   _gridCellStartWidth: 0
@@ -783,8 +783,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9824906a1603314791b917d5b5d5b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColMax: 2
-  RowMax: 2
+  ColMax: 8
+  RowMax: 10
   TableBackground: {fileID: 438552135}
 --- !u!1 &1938992848
 GameObject:
