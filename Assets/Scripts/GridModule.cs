@@ -4,24 +4,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Experimental.U2D.Animation;
+using UnityEngine.Tilemaps;
 
 public class GridModule : MonoBehaviour
 {
     public GameObject GameTableItemPrefab;
 
-    public int LeftBorderThickness = 50;
-    public int RightBorderThickness = 50;
-    public int TopBorderThickness = 50;
-    public int BottomBorderThickness = 50;
-    public int GridCellBorderThickness = 1;
-
+    
     private GameTable _gameTable = null;
-    [SerializeField]
-    private float _gridCellWidth, _gridCellHeight;
-    [SerializeField]
-    private float _gridCellStartWidth, _gridCellStartHeight;
 
     private RectTransform _gridModuleRectTransform = null;
+    private Grid _grid = null;
+    private Tilemap _tilemap = null;
 
     private bool _IsInitialized = false;
     private const string MODULE_TAG = "[GridModule]";
@@ -37,25 +31,16 @@ public class GridModule : MonoBehaviour
         Debug.Assert(parentCanvas, $"{MODULE_TAG} Parent object doesn't contain Canvas component.");
 
         _gridModuleRectTransform = GetComponent<RectTransform>();
-        Debug.Assert(_gridModuleRectTransform != null, $"{MODULE_TAG} GridModule haven't got a rect transform component.");        
+        Debug.Assert(_gridModuleRectTransform != null, $"{MODULE_TAG} GridModule haven't got a rect transform component.");
+
+        _grid = GetComponent<Grid>();
+        Debug.Assert(_grid != null, $"{MODULE_TAG} GridModule haven't got a grid component.");
+
+        _tilemap = GetComponentInParent<Tilemap>();
+        Debug.Assert(_tilemap != null, $"{MODULE_TAG} GridModule haven't got a tilemap children component.");
     }
     public void Initialization()
     {
-        if (_gridModuleRectTransform.rect.width > LeftBorderThickness + RightBorderThickness)
-        {
-            _gridCellWidth = (_gridModuleRectTransform.rect.width - LeftBorderThickness - RightBorderThickness) / _gameTable.ColMax;
-            _gridCellWidth -= GridCellBorderThickness;
-        }
-
-        if (_gridModuleRectTransform.rect.height > TopBorderThickness + BottomBorderThickness)
-        {
-            _gridCellHeight = (_gridModuleRectTransform.rect.height - TopBorderThickness - BottomBorderThickness) / _gameTable.RowMax;
-            _gridCellHeight -= GridCellBorderThickness;
-        }
-
-        _gridCellStartWidth = _gridModuleRectTransform.rect.min.x + LeftBorderThickness;
-        _gridCellStartHeight = _gridModuleRectTransform.rect.min.y + BottomBorderThickness;
-
         _IsInitialized = true;
     }
 
@@ -70,8 +55,8 @@ public class GridModule : MonoBehaviour
             {
                 int col = gameTableItemIndex % _gameTable.ColMax;
                 int row = gameTableItemIndex / _gameTable.ColMax;
-                float xInstPos = _gridCellStartWidth + GridCellBorderThickness + (_gridCellWidth + GridCellBorderThickness) * col;
-                float yInstPos = _gridCellStartHeight + GridCellBorderThickness + (_gridCellHeight + GridCellBorderThickness) * row;
+                float xInstPos = 0;
+                float yInstPos = 0;
                 var instantiatedItem = Instantiate(GameTableItemPrefab,
                                                        new Vector3(xInstPos, yInstPos, 0),
                                                        Quaternion.identity, this.transform);
