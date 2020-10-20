@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Experimental.U2D.Animation;
 using UnityEngine.Tilemaps;
@@ -9,8 +11,8 @@ using UnityEngine.Tilemaps;
 public class GridModule : MonoBehaviour
 {
     public GameObject GameTableItemPrefab;
+    public GameObject GameTablePallete;
 
-    
     private GameTable _gameTable = null;
 
     private RectTransform _gridModuleRectTransform = null;
@@ -19,6 +21,9 @@ public class GridModule : MonoBehaviour
 
     private bool _IsInitialized = false;
     private const string MODULE_TAG = "[GridModule]";
+
+    private int _colOffset;
+    private int _rowOffset;
 
     public void Start()
     {
@@ -36,11 +41,14 @@ public class GridModule : MonoBehaviour
         _grid = GetComponent<Grid>();
         Debug.Assert(_grid != null, $"{MODULE_TAG} GridModule haven't got a grid component.");
 
-        _tilemap = GetComponentInParent<Tilemap>();
+        _tilemap = GetComponentInChildren<Tilemap>();
         Debug.Assert(_tilemap != null, $"{MODULE_TAG} GridModule haven't got a tilemap children component.");
     }
     public void Initialization()
     {
+        _colOffset = _gameTable.ColMax / 2;
+        _rowOffset = _gameTable.RowMax / 2;
+        DrawGridBackground();
         _IsInitialized = true;
     }
 
@@ -55,10 +63,16 @@ public class GridModule : MonoBehaviour
             {
                 int col = gameTableItemIndex % _gameTable.ColMax;
                 int row = gameTableItemIndex / _gameTable.ColMax;
-                float xInstPos = 0;
-                float yInstPos = 0;
+                
+                Vector3Int cellPosition = new Vector3Int(
+                    (int)((col - _colOffset) ),
+                    (int)((row - _rowOffset) ),
+                    (int)_grid.cellSize.z);
+
+                Vector3 cellCenterPosition = _grid.GetCellCenterWorld(cellPosition);
+
                 var instantiatedItem = Instantiate(GameTableItemPrefab,
-                                                       new Vector3(xInstPos, yInstPos, 0),
+                                                       new Vector3(cellCenterPosition.x, cellCenterPosition.y, cellCenterPosition.z),
                                                        Quaternion.identity, this.transform);
                 if (instantiatedItem != null)
                 {
@@ -100,5 +114,32 @@ public class GridModule : MonoBehaviour
                 Debug.LogWarning($"gameTableItems[{gameTableItemIndex}] is null!");
             }
         }
+    }
+
+    private void DrawGridBackground()
+    {
+        Tilemap palleteTilemap = GameTablePallete.GetComponentInChildren<Tilemap>();
+
+        TileBase left_up_border_0 = palleteTilemap.GetTile(new Vector3Int(-2, 0, 0));
+        TileBase left_up_border_1 = palleteTilemap.GetTile(new Vector3Int(-2, 1, 0));
+        TileBase left_up_border_2 = palleteTilemap.GetTile(new Vector3Int(-1, 1, 0));
+        TileBase up_border = palleteTilemap.GetTile(new Vector3Int(0, 1, 0));
+        TileBase right_up_border_0 = palleteTilemap.GetTile(new Vector3Int(1, 1, 0));
+        TileBase right_up_border_1 = palleteTilemap.GetTile(new Vector3Int(2, 1, 0));
+        TileBase right_up_border_2 = palleteTilemap.GetTile(new Vector3Int(2, 0, 0));
+
+        _tilemap.ClearAllTiles();
+        _tilemap.SetTile(new Vector3Int(-_colOffset - 1, _rowOffset - 1, 0), left_up_border_0);
+        _tilemap.SetTile(new Vector3Int(-_colOffset - 1, _rowOffset, 0), left_up_border_1);
+        _tilemap.SetTile(new Vector3Int(-_colOffset, _rowOffset, 0), left_up_border_2);
+
+        for (int col = 0; col < _gameTable.ColMax; col++)
+        {
+            _tilemap.SetTile(new Vector3Int(col - _colOffset, _rowOffset, 0), up_border);
+        }
+
+        _tilemap.SetTile(new Vector3Int(_colOffset - 1, _rowOffset, 0), right_up_border_0);
+        _tilemap.SetTile(new Vector3Int(_colOffset, _rowOffset, 0), right_up_border_1);
+        _tilemap.SetTile(new Vector3Int(_colOffset, _rowOffset -1, 0), right_up_border_2);
     }
 }

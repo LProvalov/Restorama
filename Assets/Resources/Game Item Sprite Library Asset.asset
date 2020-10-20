@@ -24,7 +24,7 @@ MonoBehaviour:
       m_Sprite: {fileID: 21300000, guid: 331a57a718643ab4b9bbb4c6da70f6b4, type: 3}
     - m_Name: meat
       m_Hash: -1919281462
-      m_Sprite: {fileID: 21300000, guid: c334223e374dc6c4c88331fdb70e8965, type: 3}
+      m_Sprite: {fileID: 21300000, guid: 4b0e006636477dc469c382b519394e4d, type: 3}
     - m_Name: onion
       m_Hash: 164650025
       m_Sprite: {fileID: 21300000, guid: 0a6ca75f02cd3d94c8243ff2267f098e, type: 3}
